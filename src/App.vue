@@ -1,32 +1,54 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <ui-alert
+      v-for="item in alerts"
+      :key="item.key"
+      :is-shown="true"
+      init-timer
+      :color="item.type"
+      :timeout="item.timer"
+      @close="closeAlert(item.key)"
+    >
+      {{ item.message }}
+    </ui-alert>
+
     <router-view />
   </div>
 </template>
 
+<script>
+import { mapMutations, mapState } from "vuex";
+
+export default {
+  name: "App",
+
+  components: {
+    UiAlert: () => import("@src/components/Ui/UiAlert"),
+  },
+
+  computed: {
+    ...mapState({
+      alerts: (state) => state.alert.alerts,
+    }),
+  },
+
+  methods: {
+    ...mapMutations({
+      closeAlert: 'alert/closeAlert'
+    }),
+  },
+};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import "~@styles/reset.css";
+@import "~@styles/grid.css";
+@import "~@styles/ui.scss";
+@import "~@styles/helpers.scss";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.mdi {
+  line-height: 1;
+  display: flex;
 }
 </style>
