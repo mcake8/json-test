@@ -75,6 +75,7 @@ export default {
       this.loading = false;
     },
 
+    //posts doesn't actually delete from Api, so they wont't disappear from table. 
     async deletePost(id) {
       if (this.loading) {
         return;
