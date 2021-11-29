@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@styles/mixins.scss";
+@import "~@styles/variables.scss";
 .ui-button {
   display: inline-flex;
   align-items: center;

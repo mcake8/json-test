@@ -147,7 +147,7 @@
 </script>
 
 <style lang="scss">
-@import "~@styles/mixins.scss";
+@import "~@styles/variables.scss";
 
   .ui-alert {
     position: fixed;

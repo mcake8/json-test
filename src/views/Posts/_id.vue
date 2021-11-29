@@ -11,11 +11,14 @@
         <!-- if i had more time, I would implement a wysiwyg text editor instead of textarea -->
         <ui-input
           v-for="input in formSchema"
-          :key="input.value"
-          v-model="formData[input.value]"
+          :key="input.field"
+          v-model="formData[input.field]"
           :label="input.label"
           :type="input.type"
+          :error="input.error"
           class="mb-20"
+          @blur="checkField(input)"
+          @input="input.error = false"
         />
 
         <div class="row-wrap mt-40">
@@ -53,15 +56,19 @@ export default {
 
     formSchema: [
       {
-        value: "title",
+        field: "title",
         label: "Post title:",
         type: "text",
+        required: true,
+        error: false,
       },
 
       {
-        value: "body",
+        field: "body",
         label: "Post content:",
         type: "textarea",
+        required: true,
+        error: false,
       },
     ],
   }),
@@ -76,22 +83,51 @@ export default {
       showAlert: "alert/showAlert",
     }),
 
+    checkField(input) {
+      if (input.required && !this.formData[input.field]) {
+        input.error = true;
+      }
+    },
+
+    // if i had more time, i would build more complex validation with scroll to error if needed, masked inputs, probably some validation module in store. 
+    isValidForm() {
+      let isValid = true;
+
+      this.formSchema.forEach((i) => {
+        if (!this.formData[i.field] && i.required) {
+          i.error = true;
+          isValid = false;
+        }
+      });
+
+      return isValid;
+    },
+
     async getPost() {
       try {
         this.formData = await this.$api.getPost(this.id);
       } catch (e) {
-
         this.showAlert({
           type: "error",
           message: `Error: Unable to load post by id ${this.id}`,
           timer: 3000,
         });
       }
-      
     },
 
     async savePost() {
       this.loading = true;
+
+      if (!this.isValidForm()) {
+        this.showAlert({
+          type: "error",
+          message: "Fields can't be empty",
+          timer: 3000,
+        });
+
+        this.loading = false;
+        return;
+      }
 
       try {
         if (this.id) {

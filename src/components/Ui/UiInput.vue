@@ -17,6 +17,7 @@
       :class="{ 'ui-input__input--error': error }"
       :placeholder="placeholder"
       @input="$emit('input', $event.target.value)"
+      @blur="$emit('blur')"
       :value="value"
       :disabled="disabled"
     ></textarea>
@@ -30,6 +31,7 @@
       class="ui-input__input"
       :class="{ 'ui-input__input--error': error }"
       @input="$emit('input', $event.target.value)"
+       @blur="$emit('blur')"
       :disabled="disabled"
       :autocomplete="autocomplete"
     />
@@ -79,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@styles/mixins.scss";
+@import "~@styles/variables.scss";
 .ui-input {
   width: 100%;
   max-width: 280px;
@@ -104,6 +106,7 @@ export default {
     &:focus,
     &:active {
       border-color: $brandColor;
+      color: #000;
     }
 
     &[disabled] {

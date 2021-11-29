@@ -10,7 +10,7 @@
       </div>
 
       <div class="content-card">
-        <ui-table
+        <posts-table
           :list="posts"
           :headers="headers"
           @select="goToEdit"
@@ -30,7 +30,7 @@ export default {
   name: "Posts",
 
   components: {
-    UiTable: () => import("@src/components/Ui/UiTable"),
+    PostsTable: () => import("@src/components/Posts/PostsTable"),
     UiButton: () => import("@src/components/Ui/UiButton"),
     UiLoader: () => import("@src/components/Ui/UiLoader"),
   },

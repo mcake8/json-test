@@ -43,7 +43,7 @@ export default {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 @import "~@styles/reset.css";
-@import "~@styles/grid.css";
+@import "~@styles/grid.css"; // i know it's too much for this project, but i decided to left it here so i can show how i prefer to structure my layouts
 @import "~@styles/ui.scss";
 @import "~@styles/helpers.scss";
 
